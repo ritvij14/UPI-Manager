@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "809527038448",
+    "firebase_url": "https://upi-manager.firebaseio.com",
+    "project_id": "upi-manager",
+    "storage_bucket": "upi-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809527038448:android:5154e48101bef088458d35",
+        "android_client_info": {
+          "package_name": "com.example.upi_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809527038448-n1val6lhbouahkcbu49i1gu3vqrqonq8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.upi_manager",
+            "certificate_hash": "c97d94b798eb4170e824554e74c28f6a4b17c96a"
+          }
+        },
+        {
+          "client_id": "809527038448-tvo5h3ra24raeqcnlspdvbgooc2gg4qp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArXa5bxNsrKNgQUwIHqk1o1BF6wwpaPPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809527038448-tvo5h3ra24raeqcnlspdvbgooc2gg4qp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
