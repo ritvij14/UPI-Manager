@@ -1,39 +1,43 @@
- package com.example.upi_manager
+ package com.example.upi_manager.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.upi_manager.R
 import com.example.upi_manager.adapters.RecyclerAdapter
 import com.example.upi_manager.models.TransactionModel
+import com.example.upi_manager.utilities.toast
+import com.example.upi_manager.viewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
  class MainActivity : AppCompatActivity() {
 
-     public val TAG: String = "MAIN_ACTIVITY"
      private lateinit var list: ArrayList<TransactionModel>
+     private lateinit var mMainActivityViewModel: MainActivityViewModel
+     private lateinit var adapter: RecyclerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initRecyclerView()
+        mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        mMainActivityViewModel.init()
+        mMainActivityViewModel.getTestTransaction().observe(this, Observer<ArrayList<TransactionModel>> { t ->
+                adapter = RecyclerAdapter(t)
+                adapter.notifyDataSetChanged()
+                initRecyclerView()
+                toast("done")
+            })
     }
 
      private fun initRecyclerView() {
-
-         val item: TransactionModel = TransactionModel("test")
-         val item2: TransactionModel = TransactionModel("test2")
-         list.add(item)
-         list.add(item2)
-         val adapter: RecyclerAdapter = RecyclerAdapter(list)
          val linearLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
          upi_recycler_view.layoutManager = linearLayoutManager
          upi_recycler_view.adapter = adapter
      }
-
-     private fun showProgressBar() { progress_bar.visibility = View.VISIBLE }
-
-     private fun hideProgressBar() { progress_bar.visibility = View.GONE }
  }
