@@ -3,6 +3,7 @@ package com.example.upi_manager.repositories
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.upi_manager.DatabaseInterface
 import com.example.upi_manager.models.TransactionModel
 import com.example.upi_manager.views.MainActivity
 import com.google.firebase.database.*
@@ -13,20 +14,21 @@ class MainActivityRepository {
     private lateinit var list: ArrayList<TransactionModel>
     private var dbRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Transactions")
 
-    fun getTransactions(): MutableLiveData<ArrayList<TransactionModel>> {
-        setTransactions()
+    fun getTransactions(dbInterface: DatabaseInterface): MutableLiveData<ArrayList<TransactionModel>> {
+        setTransactions(dbInterface)
 
         val data: MutableLiveData<ArrayList<TransactionModel>> = MutableLiveData()
         data.postValue(list)
         return data
     }
 
-    private fun setTransactions() {
+    private fun setTransactions(dbInterface: DatabaseInterface) {
 
+        dbInterface.onRetrieveStart()
         list = ArrayList()
         dbRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
-                Log.d("DATABASE", "Unable to retrieve")
+                dbInterface.onRetrieveFailed()
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -37,10 +39,11 @@ class MainActivityRepository {
                     val item: TransactionModel = child.getValue<TransactionModel>()!!
                     list.add(item)
                 }
+                dbInterface.onRetrieveSuccess()
             }
         })
 
-        list.add(TransactionModel(list.size, "Debit", "Payment to Shop"))
+        //list.add(TransactionModel(list.size, "Debit", "Payment to Shop"))
     }
 
     companion object {
